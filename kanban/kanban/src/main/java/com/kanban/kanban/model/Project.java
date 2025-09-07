@@ -1,14 +1,21 @@
 package com.kanban.kanban.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 
 import java.util.List;
 
 @Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Project {
-    int id=(int)(Math.random()*1000);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String category;
     private String description;

@@ -1,12 +1,20 @@
 package com.kanban.kanban.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.*;
 
 @Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
-    private int id;
+    @Id
+    private Long id;
     private int projectId;
     private String type;
     private String title;
@@ -17,7 +25,7 @@ public class Task {
     private List<String> labels;
     private List<String> comments=new ArrayList<>();
 
-    public Task(int id, int projectId, String title, String description, int assignee, String dueDate, String priority, List<String> labels, String type) {
+    public Task(Long id, int projectId, String title, String description, int assignee, String dueDate, String priority, List<String> labels, String type) {
         this.id = id;
         this.projectId = projectId;
         this.title = title;

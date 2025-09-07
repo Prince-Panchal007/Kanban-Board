@@ -2,6 +2,7 @@ package com.kanban.kanban.service;
 
 import com.kanban.kanban.model.Employee;
 import com.kanban.kanban.model.Task;
+import com.kanban.kanban.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,22 +10,21 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    List<Task> l=new ArrayList<>();
+    private final TaskRepository taskRepository;
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public void addTask(Task task) {
-        l.add(task);
-        System.out.println("==================================================================================");
-        for (Task t:l) {
-            System.out.println(t);
-        }
-        System.out.println("==================================================================================");
+        taskRepository.save(task);
     }
 
     public List<Task> getTasks() {
-        return l;
+        return taskRepository.findAll();
     }
 
     public void updateTask(Task task) {
-        l.replaceAll(e->e.getId() == task.getId()?task:e);
+        taskRepository.save(task);
     }
 }

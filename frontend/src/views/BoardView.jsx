@@ -97,15 +97,15 @@ const Column = ({ column, tasks, taskMatchesFilters, getPriorityColor, getEmploy
 );
 
 const BoardView = () => {
-  const [projects] = useState([
+  const [projects, setProjects] = useState([
     { id: 1, name: 'Website Redesign', category: 'Design', description: 'Complete overhaul of company website', deadline: '2024-12-31', progress: 65 },
     { id: 2, name: 'Mobile App Development', category: 'Development', description: 'iOS and Android app for customers', deadline: '2024-11-15', progress: 40 }
   ]);
 
-  const [employees] = useState([
-    { id: 1, name: 'Sarah Johnson', email: 'sarah@company.com', avatar: 'SJ', role: 'Designer', online: true },
-    { id: 2, name: 'Mike Chen', email: 'mike@company.com', avatar: 'MC', role: 'Developer', online: true },
-    { id: 3, name: 'Emma Davis', email: 'emma@company.com', avatar: 'ED', role: 'PM', online: false },
+  const [employees, setEmployees] = useState([
+    // { id: 1, name: 'Sarah Johnson', email: 'sarah@company.com', avatar: 'SJ', role: 'Designer', online: true },
+    // { id: 2, name: 'Mike Chen', email: 'mike@company.com', avatar: 'MC', role: 'Developer', online: true },
+    // { id: 3, name: 'Emma Davis', email: 'emma@company.com', avatar: 'ED', role: 'PM', online: false },
     { id: 4, name: 'John Smith', email: 'john@company.com', avatar: 'JS', role: 'Developer', online: true }
   ]);
 
@@ -126,8 +126,8 @@ const BoardView = () => {
     // 7: { id: 7, projectId: 2, title: 'Set up CI/CD pipeline', description: 'Configure continuous integration and deployment', assignee: 2, dueDate: '2024-10-10', priority: 'low', labels: ['devops'], comments: [] },
     // 8: { id: 8, projectId: 2, title: 'Initial user research', description: 'Conduct user interviews and surveys', assignee: 1, dueDate: '2024-10-08', priority: 'medium', labels: ['research'], comments: [] }
   });
-  const getData = async () => {
-    await axios.post("http://localhost:8080/api/task/getTask").then(res => {
+  const getData = () => {
+    axios.post("http://localhost:8080/api/task/getTask").then(res => {
       console.log(res.data)
       var newcols = { ...columns };
       res.data.forEach(e => {
@@ -138,10 +138,10 @@ const BoardView = () => {
         }
       });
       setColumns(newcols);
-      console.log(newcols);
-      // console.log(tasks);
-      // console.log(columns);
     });
+    axios.post("http://localhost:8080/api/emp/getEmp").then(res => {
+      setEmployees(res.data);
+    })
   }
 
   useEffect(() => {

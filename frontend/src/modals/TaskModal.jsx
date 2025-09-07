@@ -10,18 +10,18 @@ const TaskModal = ({ showTaskModal, setShowTaskModal, selectedTask, setSelectedT
     if (!taskForm.title.trim()) return;
     if (task) {
       const updatedTask = { ...task, title: taskForm.title, description: taskForm.description, assignee: taskForm.assignee ? parseInt(taskForm.assignee) : null, priority: taskForm.priority, dueDate: taskForm.dueDate || null, type: taskForm.type || "todo" };
-      setTasks({ ...tasks, [task.id]: updatedTask });
+      // setTasks({ ...tasks, [task.id]: updatedTask });
+      axios.post("http://localhost:8080/api/task/update", updatedTask).then(res => setData());
     } else {
-      const newTaskId = Math.floor(100 + Math.random() * 900);
+      const newTaskId = Math.floor(1000 + Math.random() * 9000);
       const resolvedProjectId = typeof getSelectedProjectId === 'function' ? getSelectedProjectId() : (selectedProject || null);
       const newTask = { id: newTaskId, projectId: resolvedProjectId, title: taskForm.title, description: taskForm.description, assignee: taskForm.assignee ? parseInt(taskForm.assignee) : null, priority: taskForm.priority, dueDate: taskForm.dueDate || null, type: taskForm.type || "todo", labels: [], comments: [] };
       console.log(newTask);
-      axios.post("http://localhost:8080/api/task/add", newTask).then(res => console.log(res.data));
+      axios.post("http://localhost:8080/api/task/add", newTask).then(res => setData());
     }
     setShowTaskModal(false);
     setSelectedTask(null);
     setTaskForm({ title: '', description: '', assignee: '', priority: 'medium', dueDate: '', type: 'todo' });
-    setData();
   };
 
   return (
